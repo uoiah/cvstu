@@ -15,9 +15,24 @@ class Affine:
 		
 	def backward(self, dr):
 		dx = np.dot(dr, self.W.T)
-		dW = np.dot(self.x.T, dr)
-		db = np.sum(dr, axis=0)
+		self.dW = np.dot(self.x.T, dr)
+		self.db = np.sum(dr, axis=0)
 		return dx
+        
+class Relu:
+    def __init__(self):
+        self.x = None
+    
+    def forward(self, x):
+        self.x = x
+        r = relu(x)
+        return r
+        
+    def backward(self, dr):
+        if self.x > 0:
+            return dr
+        else:
+            return 0
 		
 class SoftmaxWithLoss:
 	def __init__(self):

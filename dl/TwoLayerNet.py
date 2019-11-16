@@ -3,8 +3,8 @@
 import sys, os
 import numpy as np
 from collections import OrderedDict
-from func import relu
 from LayerClasses import *
+from sgd import numerical_gradient
 
 class TwoLayerNet:
 	def __init__(self, inputSize, hiddenSize, outputSize, weightInit=0.01):
@@ -18,7 +18,7 @@ class TwoLayerNet:
 		self.layers['affine1'] = Affine(self.params['W1'], self.params['b1'])
 		self.layers['relu'] = Relu()
 		self.layers['affine2'] = Affine(self.params['W2'], self.params['b2'])
-		slef.lastLayer = SoftmaxWithLoss()
+		self.lastLayer = SoftmaxWithLoss()
 		
 	def predict(self, x):
 		for layer in self.layers.values():
@@ -37,19 +37,19 @@ class TwoLayerNet:
 		y = np.argmax(y, axis=1)
 		if t.ndim != 1:
 			t = np.argmax(t, axis=1)
-		a = np.sum(y == t)/float(x.shape[0))
+		a = np.sum(y == t)/float(x.shape[0])
 		return a
 		
 	
-	# 数值梯度下降
-	def numerical_gradient(self, x, t):
+	# 数值梯度
+	def num_gradient(self, x, t):
 		# self.loss(x, t)
-		loss_w = lamda w: self.loss(x, t)
+		loss_w = lambda w : self.loss(x, t)
 		grads = {}
-		grads['W1'] = ng(loss_w, self.params['W1'])
-		grads['b1'] = ng(loss_w, self.params['b1'])
-		grads['W2'] = ng(loss_w, self.params['W2'])
-		grads['b2'] = ng(loss_w, self.params['b2'])
+		grads['W1'] = numerical_gradient(loss_w, self.params['W1'])
+		grads['b1'] = numerical_gradient(loss_w, self.params['b1'])
+		grads['W2'] = numerical_gradient(loss_w, self.params['W2'])
+		grads['b2'] = numerical_gradient(loss_w, self.params['b2'])
 		return grads
 		
 	# 反向误差传播
@@ -69,4 +69,15 @@ class TwoLayerNet:
 		grads['b2'] = self.layers['affine2'].db
 		
 		return grads
+        
+def test():
+    net = TwoLayerNet(3, 5, 2)
+    x = np.array([[123,231,11],[45, 67, 156]])
+    t = np.array([[1,1],[2,2]])
+    # y = net.predict(x)
+    l = net.loss(x, t)
+    print(l)
+    
+if __name__ == '__main__':
+    test()
 	

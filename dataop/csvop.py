@@ -21,14 +21,14 @@ def dataProcess(dataDirName, div_size, cutFrom, cutTo):
         worksheet.write(row, 0, dtStr)
         dataFrame = rdcsv(name)
         df = getMeanDF(dataFrame, div_size, cutFrom, cutTo)
-        minData = getMinWl(df)
+        minData = getMinWlByPolyFit(df, 3)
         worksheet.write_row(row, 1, minData)
         row+=1
     workbook.close()
     os.system('cp result.xlsx ' + dataDirName)
     
 def main():
-    dataProcess('../exp_result/S46-10-1/', 16, 1515, 1561)
+    dataProcess('../../exp_result/5-Octadecane-3-1121/data/', 1, 1572, 1595)
     
 if __name__ == '__main__':
     main()

@@ -19,9 +19,9 @@ def picCutOP(f_name, xA, yA, xB, yB):
         return cutimg
 
 
-path = '/Users/haiou/Desktop/cvstu/picop/videoTest/s46-10-t/'
+path = '/Users/haiou/Desktop/exp_result/6-Octadecane-10-1125/videoCut/'
 sys.path.append(path)
-workbook = xlsxwriter.Workbook('temperature.xlsx')
+workbook = xlsxwriter.Workbook('tempera.xlsx')
 worksheet = workbook.add_worksheet()
 
 fileList = os.listdir(path)
@@ -32,7 +32,7 @@ for f in fileList:
     f_name = str(f)
     print(f_name)
     if f_name.endswith('png') or f_name.endswith('PNG') or f_name.endswith('jpg'):
-        img = picCutOP(f_name, 283, 168, 409, 243)
+        img = picCutOP(f_name, 318, 102, 442, 178)
         # print(f_name[:-4])
         r = reco_it(img)
         worksheet.write(row, col, f_name[:-4])

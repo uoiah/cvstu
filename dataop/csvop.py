@@ -22,6 +22,7 @@ def dataProcess(dataDirName, div_size, cutFrom, cutTo):
         dataFrame = rdcsv(name)
         df = getMeanDF(dataFrame, div_size, cutFrom, cutTo)
         minData = getMinWlByPolyFit(df, 3)
+        # minData = getMinWl(df)
         worksheet.write_row(row, 1, minData)
         row+=1
     workbook.close()

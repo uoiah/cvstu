@@ -38,13 +38,14 @@ def cutDataAndGetMin1(dataFrame, fromIndex, toIndex):
     loss = selData['Loss'].values[0]
     return wl, loss
     
+# 取loss最小值
 def getMinWl(dataFrame):
     selData = dataFrame[dataFrame.Loss == dataFrame['Loss'].min()]
     wl = selData['Wavelength'].values[0]
     loss = selData['Loss'].values[0]
     return wl, loss
 
-# 曲线拟合后，取最小值  
+# 曲线拟合后，取loss最小值(向上偏移db后，取两个波长的平均值) 
 def getMinWlByPolyFit(dataFrame, db):
     w = dataFrame['Wavelength']
     l = dataFrame['Loss']

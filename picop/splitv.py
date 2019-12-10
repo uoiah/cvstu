@@ -2,9 +2,9 @@ import cv2
 import os 
 
 sourceFileRoot = '/Users/haiou/Desktop/exp_result'
-sourceFileDir = '6-Octadecane-10-1125'
+sourceFileDir = 'e-Octadecane-14-1208'
 #要提取视频的文件名，隐藏后缀 
-sourceFileName='video/1574761871508919'
+sourceFileName='video/1575823726516852'
 #在这里把后缀接上 
 video_path = os.path.join(sourceFileRoot, sourceFileDir, sourceFileName+'.mp4') 
 times=0 

@@ -26,7 +26,7 @@ def drawPlot(dataDir):
     df = pandas.read_excel(dataDir + "heat.xlsx")
     
     
-    df = getMeanDF(df, 1)
+    # df = getMeanDF(df, 8)
     size_heat = df.shape[0]
     time_heat = np.arange(0, size_heat, 1)
     wheat = df['Wavelength']
@@ -34,7 +34,7 @@ def drawPlot(dataDir):
     lheat = df['Loss']
 
     df = pandas.read_excel(dataDir + "cold.xlsx")
-    df = getMeanDF(df, 1)
+    # df = getMeanDF(df, 8)
     size_cold = df.shape[0]
     time_cold = np.arange(0, size_cold, 1)
     wcold = df['Wavelength']
@@ -49,28 +49,19 @@ def drawPlot(dataDir):
     plt.figure(figsize=(12, 6))
     
     ax1 = plt.subplot(121)
-    plt.plot(time_heat, wheat, color='red', label='WaveLength', linewidth=1)
-    plt.xlabel('Time(minute)')
+    plt.plot(theat, wheat, color='red', label='heat cycling', linewidth=1)
+    plt.xlabel('Temperature(°C)')
     plt.ylabel('Wavelength(nm)')
     plt.grid()
-    
-    ax3 = ax1.twinx()
-    plt.plot(time_heat, theat, color='blue', label='Temeprature', linewidth=1)
-    plt.xlabel('Time(minute)')
-    plt.ylabel('Temperature(°C)')
-    # plt.grid()
+    plt.legend(loc='center right')
 
     
     ax2 = plt.subplot(122)
-    plt.plot(time_cold, wcold, color='red',label='WaveLength', linewidth=1)
-    plt.xlabel('Time(minute)')
+    plt.plot(tcold, wcold, color='blue',label='cold cycling', linewidth=1)
+    plt.xlabel('Temperature(°C)')
     plt.ylabel('Wavelength(nm)')
     plt.grid()
     
-    ax4 = ax2.twinx()
-    plt.plot(time_cold, tcold, color='blue', label='Temeprature', linewidth=1)
-    plt.xlabel('Time(minute)')
-    plt.ylabel('Temperature(°C)')
     # plt.grid()
 
     
@@ -79,17 +70,17 @@ def drawPlot(dataDir):
     # y_ticks = np.linspace(-1,5,10)
     # plt.xticks(x_ticks)
     # plt.yticks(y_ticks)
-
+    plt.legend(loc='center right')
     
     fig = plt.gcf()
     fig.tight_layout()
-    # plt.legend(loc='center right')
+    
     # fig.savefig("curve_tmp.png")
     plt.show()
     
 def main():
     
-    drawPlot("../../exp_result/b-Octadecane-15-1201/")
+    drawPlot("../../exp_result/a-Octadecane-5-1130/")
     
 if __name__ == '__main__':
     main()

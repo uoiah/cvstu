@@ -9,11 +9,11 @@ def picCutOP(f_name, xA, yA, xB, yB):
         cutimg = image[yA:yB, xA:xB]
         return cutimg
 
-path = '/Users/haiou/Desktop/exp_result/6-Octadecane-10-1125/videoCut/'
+path = '/Users/haiou/Desktop/exp_result/e-Octadecane-14-1208/videoCut/'
 sys.path.append(path)
 
 
-cutimg = picCutOP('89.jpg', 318, 102, 442, 178)
+cutimg = picCutOP('228.jpg', 217, 87, 361, 175)
 cv2.imshow('cutimg', cutimg)
 cv2.waitKey(0)
 

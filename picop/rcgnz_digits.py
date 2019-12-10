@@ -74,7 +74,7 @@ def reco_it(image):
 
             # if the total number of non-zero pixels is greater than
             # 50% of the area, mark the segment as "on"
-            if total / float(area) > 0.55:
+            if total / float(area) > 0.50:
                 on[i]= 1
 
         # lookup the digit and draw it on the image

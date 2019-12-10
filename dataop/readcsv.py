@@ -38,30 +38,25 @@ def cutDataAndGetMin1(dataFrame, fromIndex, toIndex):
     loss = selData['Loss'].values[0]
     return wl, loss
     
-# 取loss最小值
+# 无曲线拟合，直接取loss最小值
 def getMinWl(dataFrame):
     selData = dataFrame[dataFrame.Loss == dataFrame['Loss'].min()]
     wl = selData['Wavelength'].values[0]
     loss = selData['Loss'].values[0]
     return wl, loss
 
-# 曲线拟合后，取loss最小值(向上偏移db后，取两个波长的平均值) 
-def getMinWlByPolyFit(dataFrame, db):
+# 曲线拟合后，取loss最小值(向上偏移db后，取两个波长的平均值，db=0则不偏移，直接取最小值) 
+def getMinWlByPolyFit(dataFrame, db, fromwl, towl):
     w = dataFrame['Wavelength']
     l = dataFrame['Loss']
     size = w.values.size
-    wmin = round(w.values[0], 2)
-    wmax = round(w.values[size - 1], 2)
-    x = np.arange(wmin, wmax, 0.01)
+    # wmin = round(w.values[0], 2)
+#     wmax = round(w.values[size - 1], 2)
+    x = np.arange(fromwl, towl, 0.01)
     # print('min:{}, max:{}. '.format(w.values[0], w.values[size - 1]))
     fitFun = np.polyfit(w, l, 4)
     p = np.poly1d(fitFun)
     y = p(x)
-    
-    # plt.plot(w, l, linewidth=1, color='red')
-#     plt.plot(x, y, linewidth=1, color='blue')
-#     plt.show()
-    
     d = {}
     d['Wavelength'] = x
     d['Loss'] = y
@@ -69,22 +64,26 @@ def getMinWlByPolyFit(dataFrame, db):
     selData = df[df.Loss == df['Loss'].min()]
     lm = selData['Loss'].values[0]
     wm = selData['Wavelength'].values[0]
-    lminAdd = lm +db
-    x1 = wm
-    ll = p(x1)
-    while ll < lminAdd:
-        x1 += 0.01
+    # plt.plot(w, l, linewidth=1, color='red')
+#     plt.plot(x, y, linewidth=1, color='blue')
+#     plt.show()
+    if db>0:
+
+        lminAdd = lm +db
+        x1 = wm
         ll = p(x1)
+        while ll < lminAdd:
+            x1 += 0.01
+            ll = p(x1)
     
-    x2 = wm
-    ll = p(x2)
-    while ll < lminAdd:
-        x2 -= 0.01
+        x2 = wm
         ll = p(x2)
-    minwl = (x1 + x2) / 2
+        while ll < lminAdd:
+            x2 -= 0.01
+            ll = p(x2)
+        wm = (x1 + x2) / 2
     # q = np.polyder(p)#求导
-    # print(q)
-    return minwl, lm
+    return wm, lm
     
 
 def main():
